@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>TimeoutQueue Test</title>
+	<meta charset=UTF-8>
+</head>
+<body>
+	
+<button id=btn1>Button1</button>
+<button id=btn2>Button2</button>
+<button id=btn3>Button3</button>
+
+<script type=text/javascript>
+	
+	function log(args){
+		console.log(args.str);
+		console.log(args.other);
+	}
+
+	function handler(args){
+		var obj_args = {str: args, other: "other"};
+
+		var t = new TimeoutQueue(2000);
+		t.enqueue({callback: log, context: obj_args});	
+	}
+	
+	function main(){
+		var btn1 = document.getElementById("btn1");
+		var btn2 = document.getElementById("btn2");
+		var btn3 = document.getElementById("btn3");
+
+		btn1.addEventListener("click", function(){
+			handler("btn1");
+		});
+		btn2.addEventListener("click", function(){
+			handler("btn2");
+		});
+		btn3.addEventListener("click", function(){
+			handler("btn3");
+		});	
+	}
+	
+	main();
+
+</script>	
+<script src=timeoutqueue.js type=text/javascript ></script>
+</body>
+</html>
