@@ -19,13 +19,27 @@ var TimeoutQueue = function(delay = 1000){
 	var timeout_queue = [];
 
 	var that = this;
-
-	this.enqueue = function(args){
+	
+	var check_enqueue_args = function(args){
 		if(!(args.hasOwnProperty('callback') && args.hasOwnProperty('context'))){
 			throw new TimeoutQueueException("Wrong data. Expected: {callback: 'your_callback', context: 'args_obj_to_callback'}.");	
 		}
-		var node = new TimeoutQueueNode(args.callback, args.context);
-		timeout_queue.push(node);
+
+		return true;
+	}
+	
+	this.enqueue = function(args){
+		if(check_enqueue_args(args)){
+			var node = new TimeoutQueueNode(args.callback, args.context);
+			timeout_queue.push(node);
+		}
+	}
+
+	this.enqueueBeg = function(args){
+		if(check_enqueue_args(args)){
+			var node = new TimeoutQueueNode(args.callback, args.context);
+			timeout_queue.unshift(node);
+		}
 	}
 		
 	this.dequeue = function(){

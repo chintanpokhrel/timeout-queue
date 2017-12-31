@@ -28,7 +28,11 @@ function wrapper(args){
 
 and then, you can pass your args like:
 
-t.enqueue({callback: wrapper, context: args});
+t.enqueue({callback: wrapper, context: args}); //regular enqueue
+
+OR
+
+t.enqueueBeg({callback: wrapper, context: args}); //add to the beginning of queue
 
 Context: I was writing the Simon game as a part of freecodecamp front-end development challenge
 	 Was trying to call event handlers on each button press with a uniform delay but was not happening

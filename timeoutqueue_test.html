@@ -5,12 +5,20 @@
 	<meta charset=UTF-8>
 </head>
 <body>
-	
+
+<p><strong>Check the console logs as you press buttons</strong></p>
+
+<p>This triggers both regular enqueue and enqueue at first</p>	
 <button id=btn1>Button1</button>
+<p>This triggers only regular enqueue</p>
 <button id=btn2>Button2</button>
+<p>This triggers only regular enqueue</p>
 <button id=btn3>Button3</button>
 
+<script src=timeoutqueue.js type=text/javascript ></script>
 <script type=text/javascript>
+	
+	var t = new TimeoutQueue(2000);
 	
 	function log(args){
 		console.log(args.str);
@@ -18,10 +26,13 @@
 	}
 
 	function handler(args){
-		var obj_args = {str: args, other: "other"};
+		var obj_args = {str: args, other: "other args"};
 
-		var t = new TimeoutQueue(2000);
 		t.enqueue({callback: log, context: obj_args});	
+	}
+
+	function handlerUnshift(args){
+		t.enqueue({callback: console.log, context: "From Unshift: " + args});
 	}
 	
 	function main(){
@@ -31,6 +42,8 @@
 
 		btn1.addEventListener("click", function(){
 			handler("btn1");
+			handlerUnshift("btn1");
+			
 		});
 		btn2.addEventListener("click", function(){
 			handler("btn2");
@@ -43,6 +56,5 @@
 	main();
 
 </script>	
-<script src=timeoutqueue.js type=text/javascript ></script>
 </body>
 </html>
